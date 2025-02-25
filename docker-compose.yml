@@ -1,0 +1,24 @@
+services:
+  app:
+    build: .
+    container_name: budgeting_app
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
